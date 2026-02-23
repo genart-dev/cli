@@ -1,0 +1,64 @@
+{
+  "name": "@genart-dev/cli",
+  "version": "0.1.0",
+  "description": "Command-line interface for genart.dev — render, validate, export, and scaffold generative art sketches",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "bin": {
+    "genart": "./dist/index.js"
+  },
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      }
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/genart-dev/cli.git"
+  },
+  "homepage": "https://genart.dev",
+  "keywords": [
+    "genart",
+    "generative-art",
+    "cli",
+    "render",
+    "p5",
+    "three",
+    "glsl",
+    "svg",
+    "canvas2d"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "build": "tsup",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "clean": "rm -rf dist",
+    "prepublishOnly": "pnpm build"
+  },
+  "dependencies": {
+    "@genart-dev/core": "^0.1.0",
+    "@genart-dev/format": "^0.1.0",
+    "chalk": "^5.4.1",
+    "commander": "^13.1.0",
+    "inquirer": "^12.4.0",
+    "ora": "^8.2.0",
+    "puppeteer-core": "^24.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "tsup": "^8.3.6",
+    "typescript": "^5.7.3",
+    "vitest": "^3.0.5"
+  }
+}
