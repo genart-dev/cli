@@ -7,6 +7,7 @@ import { exportCommand } from "./commands/export.js";
 import { batchCommand } from "./commands/batch.js";
 import { montageCommand } from "./commands/montage.js";
 import { importCommand } from "./commands/import.js";
+import { videoCommand } from "./commands/video.js";
 
 const program = new Command();
 
@@ -23,5 +24,6 @@ program.addCommand(exportCommand);
 program.addCommand(batchCommand);
 program.addCommand(montageCommand);
 program.addCommand(importCommand);
+program.addCommand(videoCommand);
 
 program.parse();

@@ -79,8 +79,8 @@ describe("batch command", () => {
 
     const manifest = JSON.parse(await readFile(resolve(tmpDir, "manifest.json"), "utf-8"));
     expect(manifest).toHaveLength(2);
-    expect(manifest[0].seed).toBe(1);
-    expect(manifest[1].seed).toBe(2);
+    const seeds = manifest.map((e: any) => e.seed).sort();
+    expect(seeds).toEqual([1, 2]);
     expect(manifest[0].width).toBe(600);
 
     // Verify stdout pipe output

@@ -144,6 +144,22 @@ export async function captureHtml(options: CaptureOptions): Promise<CaptureResul
   }
 }
 
+/**
+ * Create and return a new page with the given viewport.
+ * The caller manages the page lifecycle (must close it when done).
+ * Used by the video command for direct page access (time injection).
+ */
+export async function getPage(
+  width: number,
+  height: number,
+  scale = 1,
+): Promise<Page> {
+  const browser = await getBrowser();
+  const page = await browser.newPage();
+  await page.setViewport({ width, height, deviceScaleFactor: scale });
+  return page;
+}
+
 /** Close the shared browser instance. */
 export async function closeBrowser(): Promise<void> {
   if (browserInstance) {
