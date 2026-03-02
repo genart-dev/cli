@@ -1,6 +1,6 @@
 import { Command } from "commander";
-import { resolve } from "node:path";
-import { writeFile } from "node:fs/promises";
+import { resolve, join } from "node:path";
+import { writeFile, mkdir } from "node:fs/promises";
 import chalk from "chalk";
 import ora from "ora";
 import { createDefaultRegistry } from "@genart-dev/core";
@@ -22,11 +22,12 @@ function slugify(title: string): string {
 }
 
 export const initCommand = new Command("init")
-  .description("Scaffold a new .genart sketch file")
+  .description("Scaffold a new .genart sketch file (or developer project with --dev)")
   .argument("[name]", "Sketch name / title")
   .option("--renderer <type>", `Renderer type: ${RENDERER_TYPES.join(", ")}`)
   .option("--preset <name>", "Canvas preset", "square-600")
   .option("--title <string>", "Sketch title")
+  .option("--dev", "Create a developer project (sketch.js + sketch.meta.json)")
   .action(async (name: string | undefined, opts) => {
     const spinner = ora("").start();
     spinner.stop();
@@ -105,35 +106,91 @@ export const initCommand = new Command("init")
       const algorithm = adapter.getAlgorithmTemplate();
 
       const id = slugify(title);
-      const now = new Date().toISOString();
 
-      const sketch: SketchDefinition = {
-        genart: "1.0",
-        id,
-        title,
-        created: now,
-        modified: now,
-        renderer: { type: rendererType },
-        canvas: { preset, width: dims.width, height: dims.height },
-        parameters: [],
-        colors: [],
-        state: {
-          seed: Math.floor(Math.random() * 10000),
-          params: {},
-          colorPalette: [],
-        },
-        algorithm,
-      };
+      if (opts.dev) {
+        // Developer project mode: create directory with sketch source + meta
+        await initDevProject({
+          id,
+          title,
+          rendererType,
+          preset,
+          dims,
+          algorithm,
+        });
+      } else {
+        // Standard mode: create a single .genart file
+        const now = new Date().toISOString();
+        const sketch: SketchDefinition = {
+          genart: "1.0",
+          id,
+          title,
+          created: now,
+          modified: now,
+          renderer: { type: rendererType },
+          canvas: { preset, width: dims.width, height: dims.height },
+          parameters: [],
+          colors: [],
+          state: {
+            seed: Math.floor(Math.random() * 10000),
+            params: {},
+            colorPalette: [],
+          },
+          algorithm,
+        };
 
-      const outputPath = resolve(`${id}.genart`);
-      const json = serializeGenart(sketch);
-      await writeFile(outputPath, json, "utf-8");
+        const outputPath = resolve(`${id}.genart`);
+        const json = serializeGenart(sketch);
+        await writeFile(outputPath, json, "utf-8");
 
-      console.log(chalk.green(`✓ Created ${outputPath}`));
-      console.log(chalk.dim(`  Renderer: ${rendererType}`));
-      console.log(chalk.dim(`  Canvas:   ${dims.width}×${dims.height} (${preset})`));
+        console.log(chalk.green(`✓ Created ${outputPath}`));
+        console.log(chalk.dim(`  Renderer: ${rendererType}`));
+        console.log(chalk.dim(`  Canvas:   ${dims.width}×${dims.height} (${preset})`));
+      }
     } catch (err) {
       console.error(chalk.red(`Error: ${(err as Error).message}`));
       process.exitCode = 1;
     }
   });
+
+/** Scaffold a developer project directory. */
+async function initDevProject(opts: {
+  id: string;
+  title: string;
+  rendererType: RendererType;
+  preset: string;
+  dims: { width: number; height: number };
+  algorithm: string;
+}): Promise<void> {
+  const { id, title, rendererType, preset, dims, algorithm } = opts;
+  const projectDir = resolve(id);
+
+  await mkdir(projectDir, { recursive: true });
+
+  // Write sketch source file
+  const srcFile = rendererType === "glsl" ? "sketch.frag" : "sketch.js";
+  await writeFile(join(projectDir, srcFile), algorithm, "utf-8");
+
+  // Write sketch.meta.json
+  const meta: Record<string, unknown> = {
+    title,
+    id,
+    renderer: { type: rendererType },
+    canvas: { preset, width: dims.width, height: dims.height },
+    parameters: [],
+    colors: [],
+  };
+  await writeFile(
+    join(projectDir, "sketch.meta.json"),
+    JSON.stringify(meta, null, 2),
+    "utf-8",
+  );
+
+  console.log(chalk.green(`✓ Created developer project: ${projectDir}/`));
+  console.log(chalk.dim(`  ${srcFile}`));
+  console.log(chalk.dim(`  sketch.meta.json`));
+  console.log(chalk.dim(`  Renderer: ${rendererType}`));
+  console.log(chalk.dim(`  Canvas:   ${dims.width}×${dims.height} (${preset})`));
+  console.log(
+    chalk.dim(`\n  To start developing: genart dev ${id}`),
+  );
+}

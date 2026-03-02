@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach, afterEach } from "vitest";
-import { mkdtemp, readFile, rm } from "node:fs/promises";
+import { mkdtemp, readFile, rm, stat } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { parseGenart } from "@genart-dev/format";
@@ -66,6 +66,67 @@ describe("init command", () => {
         expect(sketch.renderer.type).toBe(renderer);
         expect(sketch.algorithm).toBeTruthy();
       }
+    } finally {
+      process.chdir(origCwd);
+    }
+  });
+
+  it("scaffolds a developer project with --dev", async () => {
+    const origCwd = process.cwd();
+    process.chdir(tmpDir);
+
+    try {
+      const { initCommand } = await import("./init.js");
+      await initCommand.parseAsync([
+        "node", "init",
+        "--dev",
+        "--renderer", "p5",
+        "--preset", "square-600",
+        "--title", "Dev Project",
+      ]);
+
+      const projectDir = join(tmpDir, "dev-project");
+      const dirStat = await stat(projectDir);
+      expect(dirStat.isDirectory()).toBe(true);
+
+      // Check sketch.js exists
+      const sketchJs = await readFile(join(projectDir, "sketch.js"), "utf-8");
+      expect(sketchJs).toContain("function sketch");
+
+      // Check sketch.meta.json exists
+      const metaRaw = await readFile(join(projectDir, "sketch.meta.json"), "utf-8");
+      const meta = JSON.parse(metaRaw);
+      expect(meta.title).toBe("Dev Project");
+      expect(meta.renderer.type).toBe("p5");
+      expect(meta.canvas.preset).toBe("square-600");
+    } finally {
+      process.chdir(origCwd);
+    }
+  });
+
+  it("scaffolds a GLSL developer project with --dev", async () => {
+    const origCwd = process.cwd();
+    process.chdir(tmpDir);
+
+    try {
+      const { initCommand } = await import("./init.js");
+      await initCommand.parseAsync([
+        "node", "init",
+        "--dev",
+        "--renderer", "glsl",
+        "--preset", "square-600",
+        "--title", "GLSL Dev",
+      ]);
+
+      const projectDir = join(tmpDir, "glsl-dev");
+
+      // GLSL projects use sketch.frag
+      const fragSource = await readFile(join(projectDir, "sketch.frag"), "utf-8");
+      expect(fragSource).toBeTruthy();
+
+      const metaRaw = await readFile(join(projectDir, "sketch.meta.json"), "utf-8");
+      const meta = JSON.parse(metaRaw);
+      expect(meta.renderer.type).toBe("glsl");
     } finally {
       process.chdir(origCwd);
     }
