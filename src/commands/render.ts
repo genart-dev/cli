@@ -1,13 +1,39 @@
 import { Command } from "commander";
-import { resolve, basename, extname } from "node:path";
-import { writeFile } from "node:fs/promises";
+import { resolve, dirname, basename, extname, join } from "node:path";
+import { readFile, writeFile } from "node:fs/promises";
 import chalk from "chalk";
 import ora from "ora";
 import { createDefaultRegistry } from "@genart-dev/core";
+import type { SketchDefinition, SketchDataSource } from "@genart-dev/format";
 import { loadSketch } from "../util/load-sketch.js";
 import { applyOverrides, type SketchOverrides } from "../util/apply-overrides.js";
 import { parseWait } from "../util/parse-wait.js";
 import { captureHtml, closeBrowser } from "../capture/browser.js";
+
+/**
+ * Resolve file-based data sources by reading .genart-data files from disk
+ * and converting them to inline sources so the HTML generator can embed them.
+ */
+async function resolveFileDataSources(
+  sketch: SketchDefinition,
+  sketchPath: string,
+): Promise<void> {
+  if (!sketch.data) return;
+  const dir = dirname(sketchPath);
+  for (const [key, source] of Object.entries(sketch.data)) {
+    if (source.source === 'file' && source.path) {
+      const dataPath = resolve(dir, source.path);
+      const raw = JSON.parse(await readFile(dataPath, 'utf-8')) as Record<string, unknown>;
+      // Extract the value payload — .genart-data files have { "genart-data": "1.0", "value": ... }
+      const value = raw["value"] ?? raw;
+      (sketch.data as Record<string, SketchDataSource>)[key] = {
+        type: source.type,
+        source: 'inline',
+        value,
+      };
+    }
+  }
+}
 
 export const renderCommand = new Command("render")
   .description("Render a .genart sketch to an image")
@@ -44,6 +70,9 @@ export const renderCommand = new Command("render")
       }
 
       const modified = applyOverrides(sketch, overrides);
+
+      // Resolve file-based data sources before HTML generation
+      await resolveFileDataSources(modified, filePath);
 
       // Generate HTML
       spinner.text = "Generating standalone HTML...";
