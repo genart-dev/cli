@@ -134,9 +134,14 @@ export const montageCommand = new Command("montage")
       const gap = opts.gap as number;
       const padding = opts.padding as number;
       const background = opts.background as string;
+      const labelMode = opts.label as string;
+      const labelColor = opts.labelColor as string;
+      const labelFontSize = opts.labelFontSize as number;
+      const labelHeight = labelMode !== "none" ? labelFontSize + 10 : 0;
 
       const totalWidth = padding * 2 + columns * tileWidth + (columns - 1) * gap;
-      const totalHeight = padding * 2 + rows * tileHeight + (rows - 1) * gap;
+      const totalHeight =
+        padding * 2 + rows * (tileHeight + labelHeight) + (rows - 1) * gap;
 
       spinner.text = `Composing ${columns}×${rows} grid (${totalWidth}×${totalHeight})...`;
 
@@ -151,7 +156,7 @@ export const montageCommand = new Command("montage")
         const col = i % columns;
         const row = Math.floor(i / columns);
         const left = padding + col * (tileWidth + gap);
-        const top = padding + row * (tileHeight + gap);
+        const top = padding + row * (tileHeight + labelHeight + gap);
 
         // Resize if needed
         let tileBuffer: Buffer;
@@ -164,6 +169,35 @@ export const montageCommand = new Command("montage")
         }
 
         composites.push({ input: tileBuffer, left, top });
+
+        // Label
+        if (labelMode !== "none" && labelHeight > 0) {
+          let text = "";
+          if (labelMode === "filename") {
+            text = basename(images[i]!.entry.path).replace(/\.\w+$/, "");
+          } else if (labelMode === "seed") {
+            text = images[i]!.entry.seed != null ? `${images[i]!.entry.seed}` : "";
+          } else if (labelMode === "index") {
+            text = `${images[i]!.entry.index}`;
+          }
+          if (text) {
+            const escaped = text
+              .replace(/&/g, "&amp;")
+              .replace(/</g, "&lt;")
+              .replace(/>/g, "&gt;");
+            const svgLabel = Buffer.from(
+              `<svg width="${tileWidth}" height="${labelHeight}">` +
+                `<text x="${tileWidth / 2}" y="${labelFontSize + 2}" ` +
+                `font-family="sans-serif" font-size="${labelFontSize}" ` +
+                `fill="${labelColor}" text-anchor="middle">${escaped}</text></svg>`,
+            );
+            composites.push({
+              input: svgLabel,
+              left,
+              top: top + tileHeight,
+            });
+          }
+        }
       }
 
       // Create montage canvas and composite tiles
