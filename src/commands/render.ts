@@ -11,6 +11,63 @@ import { parseWait } from "../util/parse-wait.js";
 import { captureHtml, closeBrowser } from "../capture/browser.js";
 
 /**
+ * Compile a `.gs` (GenArt Script) file to a minimal SketchDefinition.
+ * Params and colors declared in the source are extracted and placed into
+ * the definition so downstream overrides and HTML generation work normally.
+ */
+async function loadGenArtScript(filePath: string, opts: {
+  width?: number;
+  height?: number;
+  seed?: number;
+}): Promise<SketchDefinition> {
+  const { compile } = await import("@genart-dev/genart-script");
+  const source = await readFile(filePath, "utf-8");
+  const result = compile(source);
+  if (!result.ok) {
+    const messages = result.errors.map((e) => `  ${e.line}:${e.col} ${e.message}`).join("\n");
+    throw new Error(`GenArt Script compile errors:\n${messages}`);
+  }
+
+  const now = new Date().toISOString();
+  const id = basename(filePath, extname(filePath)).replace(/[^a-z0-9]+/gi, "-").toLowerCase();
+
+  const sketch: SketchDefinition = {
+    genart: "1.1",
+    id,
+    title: id,
+    created: now,
+    modified: now,
+    renderer: { type: "genart" },
+    canvas: {
+      width: opts.width ?? 800,
+      height: opts.height ?? 800,
+    },
+    parameters: result.params.map((p) => ({
+      key: p.key,
+      label: p.label,
+      type: "float" as const,
+      min: p.min,
+      max: p.max,
+      step: p.step,
+      default: p.default,
+    })),
+    colors: result.colors.map((c) => ({
+      key: c.key,
+      label: c.label,
+      default: c.default,
+    })),
+    state: {
+      seed: opts.seed ?? Math.floor(Math.random() * 1_000_000),
+      params: Object.fromEntries(result.params.map((p) => [p.key, p.default])),
+      colorPalette: result.colors.map((c) => c.default),
+    },
+    algorithm: source,
+  };
+
+  return sketch;
+}
+
+/**
  * Resolve file-based data sources by reading .genart-data files from disk
  * and converting them to inline sources so the HTML generator can embed them.
  */
@@ -36,8 +93,8 @@ async function resolveFileDataSources(
 }
 
 export const renderCommand = new Command("render")
-  .description("Render a .genart sketch to an image")
-  .argument("<file>", "Path to .genart file")
+  .description("Render a .genart sketch or .gs GenArt Script to an image")
+  .argument("<file>", "Path to .genart or .gs file")
   .option("--wait <duration>", "How long to let the sketch animate before capture", "500ms")
   .option("--seed <n>", "Override seed", Number)
   .option("--params <json>", "Override parameters (JSON object)")
@@ -54,13 +111,27 @@ export const renderCommand = new Command("render")
 
     try {
       const filePath = resolve(file);
-      const sketch = await loadSketch(filePath);
+      const ext = extname(filePath).toLowerCase();
+      const isGenArtScript = ext === ".gs";
 
-      // Build overrides
+      // Load sketch — either from .genart JSON or compile from .gs source
+      let sketch: SketchDefinition;
+      if (isGenArtScript) {
+        spinner.text = "Compiling GenArt Script...";
+        sketch = await loadGenArtScript(filePath, {
+          width: opts.width as number | undefined,
+          height: opts.height as number | undefined,
+          seed: opts.seed as number | undefined,
+        });
+      } else {
+        sketch = await loadSketch(filePath);
+      }
+
+      // Build overrides (for .gs files, width/height/seed were already applied above)
       const overrides: SketchOverrides = {};
-      if (opts.seed !== undefined) overrides.seed = opts.seed as number;
-      if (opts.width !== undefined) overrides.width = opts.width as number;
-      if (opts.height !== undefined) overrides.height = opts.height as number;
+      if (!isGenArtScript && opts.seed !== undefined) overrides.seed = opts.seed as number;
+      if (!isGenArtScript && opts.width !== undefined) overrides.width = opts.width as number;
+      if (!isGenArtScript && opts.height !== undefined) overrides.height = opts.height as number;
       if (opts.preset) overrides.preset = opts.preset as string;
       if (opts.params) {
         overrides.params = JSON.parse(opts.params as string) as Record<string, number>;

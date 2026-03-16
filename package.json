@@ -54,6 +54,8 @@
   "dependencies": {
     "@genart-dev/core": "^0.6.7",
     "@genart-dev/format": "^0.5.3",
+    "@genart-dev/genart-script": "^0.1.0",
+    "@genart-dev/illustration": "^0.3.0",
     "@genart-dev/mcp-server": "^0.4.33",
     "@modelcontextprotocol/sdk": "^1.12.0",
     "chalk": "^5.4.1",

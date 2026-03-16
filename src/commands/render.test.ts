@@ -2,6 +2,7 @@ import { describe, it, expect, vi, beforeEach } from "vitest";
 import { resolve } from "node:path";
 
 const FIXTURE = resolve(import.meta.dirname, "../__fixtures__/sample.genart");
+const GS_FIXTURE = resolve(import.meta.dirname, "../__fixtures__/sample.gs");
 
 // Mock the capture module to avoid needing Chrome
 vi.mock("../capture/browser.js", () => ({
@@ -42,6 +43,19 @@ describe("render command", () => {
     expect(callArgs.format).toBe("png");
     expect(callArgs.html).toContain("<!DOCTYPE html>");
 
+    expect(writeFile).toHaveBeenCalledOnce();
+  });
+
+  it("renders a .gs GenArt Script file", async () => {
+    const { renderCommand } = await import("./render.js");
+    const { captureHtml } = await import("../capture/browser.js");
+    const { writeFile } = await import("node:fs/promises");
+
+    await renderCommand.parseAsync(["node", "render", GS_FIXTURE, "-o", "/tmp/test-gs.png"]);
+
+    expect(captureHtml).toHaveBeenCalledOnce();
+    const callArgs = vi.mocked(captureHtml).mock.calls[0]![0];
+    expect(callArgs.html).toContain("<!DOCTYPE html>");
     expect(writeFile).toHaveBeenCalledOnce();
   });
 
