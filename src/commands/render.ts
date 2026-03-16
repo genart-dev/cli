@@ -4,7 +4,7 @@ import { readFile, writeFile } from "node:fs/promises";
 import chalk from "chalk";
 import ora from "ora";
 import { createDefaultRegistry } from "@genart-dev/core";
-import type { SketchDefinition, SketchDataSource } from "@genart-dev/format";
+import type { SketchDefinition, SketchDataSource, DesignLayer } from "@genart-dev/format";
 import { loadSketch } from "../util/load-sketch.js";
 import { applyOverrides, type SketchOverrides } from "../util/apply-overrides.js";
 import { parseWait } from "../util/parse-wait.js";
@@ -62,6 +62,23 @@ async function loadGenArtScript(filePath: string, opts: {
       colorPalette: result.colors.map((c) => c.default),
     },
     algorithm: source,
+    ...(result.layers.length > 0 && {
+      layers: result.layers.map((l, i): DesignLayer => ({
+        id: `layer-${i}`,
+        type: l.type,
+        name: l.name ?? `${l.type} (${l.preset})`,
+        visible: l.visible ?? true,
+        locked: false,
+        opacity: l.opacity ?? 1,
+        blendMode: (l.blend ?? "normal") as DesignLayer["blendMode"],
+        transform: {
+          x: 0, y: 0,
+          width: opts.width ?? 800, height: opts.height ?? 800,
+          rotation: 0, scaleX: 1, scaleY: 1, anchorX: 0, anchorY: 0,
+        },
+        properties: { preset: l.preset },
+      })),
+    }),
   };
 
   return sketch;
