@@ -91,7 +91,10 @@ export async function compileGsToDefinition(
             anchorX: 0,
             anchorY: 0,
           },
-          properties: { preset: l.preset },
+          properties: {
+            preset: l.preset,
+            ...(l.opacityParam && { __opacityParam: l.opacityParam }),
+          },
         }),
       ),
     }),
