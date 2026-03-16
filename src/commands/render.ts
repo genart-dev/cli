@@ -1,88 +1,15 @@
 import { Command } from "commander";
-import { resolve, dirname, basename, extname, join } from "node:path";
+import { resolve, dirname, extname, join } from "node:path";
 import { readFile, writeFile } from "node:fs/promises";
 import chalk from "chalk";
 import ora from "ora";
 import { createDefaultRegistry } from "@genart-dev/core";
-import type { SketchDefinition, SketchDataSource, DesignLayer } from "@genart-dev/format";
+import type { SketchDefinition, SketchDataSource } from "@genart-dev/format";
 import { loadSketch } from "../util/load-sketch.js";
 import { applyOverrides, type SketchOverrides } from "../util/apply-overrides.js";
 import { parseWait } from "../util/parse-wait.js";
 import { captureHtml, closeBrowser } from "../capture/browser.js";
-
-/**
- * Compile a `.gs` (GenArt Script) file to a minimal SketchDefinition.
- * Params and colors declared in the source are extracted and placed into
- * the definition so downstream overrides and HTML generation work normally.
- */
-async function loadGenArtScript(filePath: string, opts: {
-  width?: number;
-  height?: number;
-  seed?: number;
-}): Promise<SketchDefinition> {
-  const { compile } = await import("@genart-dev/genart-script");
-  const source = await readFile(filePath, "utf-8");
-  const result = compile(source);
-  if (!result.ok) {
-    const messages = result.errors.map((e) => `  ${e.line}:${e.col} ${e.message}`).join("\n");
-    throw new Error(`GenArt Script compile errors:\n${messages}`);
-  }
-
-  const now = new Date().toISOString();
-  const id = basename(filePath, extname(filePath)).replace(/[^a-z0-9]+/gi, "-").toLowerCase();
-
-  const sketch: SketchDefinition = {
-    genart: "1.1",
-    id,
-    title: id,
-    created: now,
-    modified: now,
-    renderer: { type: "genart" },
-    canvas: {
-      width: opts.width ?? 800,
-      height: opts.height ?? 800,
-    },
-    parameters: result.params.map((p) => ({
-      key: p.key,
-      label: p.label,
-      type: "float" as const,
-      min: p.min,
-      max: p.max,
-      step: p.step,
-      default: p.default,
-    })),
-    colors: result.colors.map((c) => ({
-      key: c.key,
-      label: c.label,
-      default: c.default,
-    })),
-    state: {
-      seed: opts.seed ?? Math.floor(Math.random() * 1_000_000),
-      params: Object.fromEntries(result.params.map((p) => [p.key, p.default])),
-      colorPalette: result.colors.map((c) => c.default),
-    },
-    algorithm: source,
-    ...(result.layers.length > 0 && {
-      layers: result.layers.map((l, i): DesignLayer => ({
-        id: `layer-${i}`,
-        type: l.type,
-        name: l.name ?? `${l.type} (${l.preset})`,
-        visible: l.visible ?? true,
-        locked: false,
-        opacity: l.opacity ?? 1,
-        blendMode: (l.blend ?? "normal") as DesignLayer["blendMode"],
-        transform: {
-          x: 0, y: 0,
-          width: opts.width ?? 800, height: opts.height ?? 800,
-          rotation: 0, scaleX: 1, scaleY: 1, anchorX: 0, anchorY: 0,
-        },
-        properties: { preset: l.preset },
-      })),
-    }),
-  };
-
-  return sketch;
-}
+import { compileGsToDefinition } from "../util/compile-gs.js";
 
 /**
  * Resolve file-based data sources by reading .genart-data files from disk
@@ -135,7 +62,7 @@ export const renderCommand = new Command("render")
       let sketch: SketchDefinition;
       if (isGenArtScript) {
         spinner.text = "Compiling GenArt Script...";
-        sketch = await loadGenArtScript(filePath, {
+        sketch = await compileGsToDefinition(filePath, {
           width: opts.width as number | undefined,
           height: opts.height as number | undefined,
           seed: opts.seed as number | undefined,
