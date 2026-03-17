@@ -49,14 +49,23 @@ export async function compileGsToDefinition(
     modified: now,
     renderer: { type: "genart" },
     canvas: { width: w, height: h },
-    parameters: result.params.map((p) => ({
-      key: p.key,
-      label: p.label,
-      min: p.min,
-      max: p.max,
-      step: p.step,
-      default: p.default,
-    })),
+    // tabs/tab fields added in genart-script >=0.2.0; cast through unknown for compat
+    ...((() => {
+      const tabs = (result as unknown as Record<string, unknown>).tabs as Array<{ id: string; label: string }> | undefined;
+      return tabs && tabs.length > 0 ? { tabs: tabs.map((t) => ({ id: t.id, label: t.label })) } : {};
+    })()),
+    parameters: result.params.map((p) => {
+      const tab = (p as unknown as Record<string, unknown>).tab as string | undefined;
+      return {
+        key: p.key,
+        label: p.label,
+        ...(tab && { tab }),
+        min: p.min,
+        max: p.max,
+        step: p.step,
+        default: p.default,
+      };
+    }),
     colors: result.colors.map((c) => ({
       key: c.key,
       label: c.label,
