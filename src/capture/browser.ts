@@ -46,6 +46,20 @@ export function findChromePath(): string | undefined {
   return undefined;
 }
 
+/**
+ * Chrome launch args that enable WebGL2 via SwANGLE (SwiftShader + ANGLE).
+ * On macOS ARM, SwiftShader is broken — `headless: "new"` uses the real GPU.
+ */
+function getWebGLArgs(): string[] {
+  const base = ["--use-gl=angle"];
+  if (process.platform === "darwin" && process.arch === "arm64") {
+    // macOS ARM: SwiftShader disabled on ARM per Chromium bug.
+    // headless:"new" uses the full rendering pipeline with real GPU.
+    return base;
+  }
+  return [...base, "--use-angle=swiftshader", "--enable-unsafe-swiftshader"];
+}
+
 /** Shared browser instance (lazy singleton). */
 let browserInstance: Browser | null = null;
 
@@ -66,12 +80,13 @@ async function getBrowser(): Promise<Browser> {
   }
 
   browserInstance = await puppeteer.launch({
-    headless: true,
+    headless: "new",
     executablePath,
     args: [
       "--no-sandbox",
       "--disable-setuid-sandbox",
       "--disable-dev-shm-usage",
+      ...getWebGLArgs(),
     ],
   });
 
