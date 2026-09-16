@@ -98,7 +98,12 @@ export const batchCommand = new Command("batch")
 
             const modified = applyOverrides(sketch, overrides);
             const adapter = registry.resolve(modified.renderer.type);
-            const html = adapter.generateStandaloneHTML(modified);
+            // --scale sizes the canvas backing store as well as the
+            // capture, so the layer stack composites at that resolution
+            // (ADR 111).
+            const html = adapter.generateStandaloneHTML(modified, {
+              renderScale: opts.scale as number,
+            });
 
             const result = await captureHtml({
               html,

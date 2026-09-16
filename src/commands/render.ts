@@ -93,7 +93,12 @@ export const renderCommand = new Command("render")
       spinner.text = "Generating standalone HTML...";
       const registry = createDefaultRegistry();
       const adapter = registry.resolve(modified.renderer.type);
-      const html = adapter.generateStandaloneHTML(modified);
+      // --scale sizes the canvas backing store as well as the capture, so
+      // the layer stack composites at that resolution instead of being
+      // drawn at layout size and enlarged by the screenshot (ADR 111).
+      const html = adapter.generateStandaloneHTML(modified, {
+        renderScale: opts.scale as number,
+      });
 
       // Capture
       const waitMs = parseWait(opts.wait as string);
