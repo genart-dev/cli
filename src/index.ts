@@ -18,7 +18,7 @@ const program = new Command();
 program
   .name("genart")
   .description("CLI for genart.dev — render, batch, montage, import, validate, export, compile, dev, and scaffold generative art sketches")
-  .version("0.2.0");
+  .version("0.3.0");
 
 program.addCommand(renderCommand);
 program.addCommand(infoCommand);

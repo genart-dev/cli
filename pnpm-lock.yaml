@@ -9,17 +9,20 @@ importers:
   .:
     dependencies:
       '@genart-dev/core':
-        specifier: ^0.6.7
-        version: 0.6.7(esbuild@0.27.3)
+        specifier: ^0.12.0
+        version: 0.12.0(esbuild@0.27.3)
       '@genart-dev/format':
-        specifier: ^0.5.3
-        version: 0.5.3
+        specifier: ^0.7.0
+        version: 0.7.0
+      '@genart-dev/genart-script':
+        specifier: ^0.1.0
+        version: 0.1.5
       '@genart-dev/illustration':
         specifier: ^0.3.0
         version: 0.3.0
       '@genart-dev/mcp-server':
-        specifier: ^0.4.33
-        version: 0.4.33(esbuild@0.27.3)(typescript@5.9.3)
+        specifier: ^0.5.0
+        version: 0.5.0(esbuild@0.27.3)(typescript@5.9.3)
       '@modelcontextprotocol/sdk':
         specifier: ^1.12.0
         version: 1.27.1(zod@3.25.76)
@@ -227,8 +230,24 @@ packages:
     cpu: [x64]
     os: [win32]
 
-  '@genart-dev/components@0.1.0':
-    resolution: {integrity: sha512-UQARaUB/1v4CeYwqS/EGoxZ2adpbZ5QX6u+v3gxWbSEMbGT4nulChAp8kEJMAmUuXpLUL6amQnaYj9nE6RNxrg==}
+  '@genart-dev/components@0.1.4':
+    resolution: {integrity: sha512-eIuYLI7FnEEVyTqZ5IvTM+4svzPqdotQtE/28T23jczB7KBzrfnntHV0VQGRG6AZfz+WLmbPm/ytYsjPHFfo2A==}
+
+  '@genart-dev/core@0.11.1':
+    resolution: {integrity: sha512-ppLv+Yg2WENL7H5b0QBqC0kp/KHODvYvwzgfmAPU2DNxCVQkFk+klu1pjuFVtR3LEfb3DvHVDGEMgJ4oiwZnJQ==}
+    peerDependencies:
+      esbuild: '>=0.17.0'
+    peerDependenciesMeta:
+      esbuild:
+        optional: true
+
+  '@genart-dev/core@0.12.0':
+    resolution: {integrity: sha512-8osA+TVaOhOocRW310QVCI8CTv2UhOOqa0qRy2YIUTqzzjPWb9MC/xxLITdzpJ8mwZnrFMkvdPzC98XYWSKokw==}
+    peerDependencies:
+      esbuild: '>=0.17.0'
+    peerDependenciesMeta:
+      esbuild:
+        optional: true
 
   '@genart-dev/core@0.3.1':
     resolution: {integrity: sha512-McUayfN+ZlEbyDVouD0h1zRMxSvpHbQkSO+Jhal+mIfwaOYQzzwYElfbnUsvhv5V1QAnHEpn0TXdrrhPjYKSLA==}
@@ -241,8 +260,13 @@ packages:
       esbuild:
         optional: true
 
-  '@genart-dev/format@0.2.0':
-    resolution: {integrity: sha512-zSeFfrJ9t8nZ/093b+0XLb8VElSSW3tx1hQZJSRsRlkupxByCbERde6kMvxH6USBuZ3truEanIIOrWDXB+PnRQ==}
+  '@genart-dev/core@0.7.0':
+    resolution: {integrity: sha512-uC8MjmvBSZpaVRNKelSBhUXfqGgydeWnyJOAhSuWI6uFN7jlwqtmS8LD9Jh920djeIVnw/PVKiGZ55RIW771tA==}
+    peerDependencies:
+      esbuild: '>=0.17.0'
+    peerDependenciesMeta:
+      esbuild:
+        optional: true
 
   '@genart-dev/format@0.3.0':
     resolution: {integrity: sha512-j9dlH1qnGJGSz8HB8Fg4s8SDeWbKtX9t5n9pBY4XdQKfz3q7yFJtKUvmVblOwyKRx/WZRhjL5Xt331icruubjA==}
@@ -250,33 +274,48 @@ packages:
   '@genart-dev/format@0.5.3':
     resolution: {integrity: sha512-x+PJRu1TXpX6/X0d3O9Y348FXpTCS5giPRNCaHY1mA7tN8SM5Xk3ip/TUDgQ6IUkd4S/NaD6EBqK6TNptiQJXw==}
 
+  '@genart-dev/format@0.6.1':
+    resolution: {integrity: sha512-Ed1roZFTH/2P8hzlcg9826HdyrA6xJpPwmO2xeawStgnW63DXLxAmCMofkehn5W5Fhd2S42ghWqctkTxt38QjQ==}
+
+  '@genart-dev/format@0.7.0':
+    resolution: {integrity: sha512-IwUZmJuKGWEds800HsAKmS8uWlr5XRSbI//q+iiYhliph5vTydMnNeiIj7B7Uq2/46gDfISvzADTt/vRCvzUTg==}
+
+  '@genart-dev/genart-script@0.1.5':
+    resolution: {integrity: sha512-8yTmu5dkrbAYyshhJNmBDkcZeHmdoMWCxJ6zhCjFy2qgXHGgQZ0gyMMiVFnkmnEoMHixvpuHTaNLbmE0Y+MH3g==}
+
   '@genart-dev/illustration@0.3.0':
     resolution: {integrity: sha512-vvf9zOKVbFUHCJS3tZLZT9Wsn9mgVoRmaeJ0yjr4QDyHAsiwVb6dTAo5jj8wBOzuJdfi6iylXBV4OGhP2Tt/GQ==}
 
-  '@genart-dev/mcp-server@0.4.33':
-    resolution: {integrity: sha512-lMsQQ6RHzmbe5E42Nd2ArBOkXQA12iM8GuFBS8LfttO61MgRG2Bt0bG7FyJUoSXPn9fouSmQVRvTmJP04reNQg==}
+  '@genart-dev/mcp-server@0.5.0':
+    resolution: {integrity: sha512-QM/T5bJcMoZ0aLQU7BD/w34KxyQPIqzJ3mfEsXLwAUebuDD/ORMWZ8JsPWAlCjSY9z9n5Ddlc7lUSQnjIvFUEg==}
     hasBin: true
 
-  '@genart-dev/plugin-animation@0.1.0':
-    resolution: {integrity: sha512-FZY/TAoh8SkfBuoLZ6LN3zfb5Y+RtJpTZtVQeW/RaDew1bZunRzFOo8hE4xfRe058Fz7qr6MoV8/4Uch1jfv7Q==}
+  '@genart-dev/plugin-animation@0.2.0':
+    resolution: {integrity: sha512-mmaMzf85mHa8Qzu+Cz9Cmy5trsnnihv1PJGYU3R0/HFKrdQX5XSNsFUVLcxxncyx9ez+D4FjOeEohOJV2ksMRg==}
 
-  '@genart-dev/plugin-color-adjust@0.1.0':
-    resolution: {integrity: sha512-J0DdwnQs4c+7RHSweTOS0lJHGPJF9kNZR3HozJentfD7htJBNJIq6192mJ6XqrDgXmgUkaW630QfGfJbJfSBMQ==}
+  '@genart-dev/plugin-architecture@0.2.0':
+    resolution: {integrity: sha512-VqQfr7hV5DmV7MOQeJswe5ELEeHxKKIKyolpgl7aSxCxSlDJ+V9zkcQiCbCoxPVayL+e90zxLUnIL2HjY93Imw==}
 
-  '@genart-dev/plugin-compositing@0.1.0':
-    resolution: {integrity: sha512-vaNcZKlENlWxeWTAoFrNIWpWFfV+CgH+5iWpZVgUNuZETcp46/zKxzl01ZslOlKPSBGmz4u7HAjwPc6fn1lEcw==}
+  '@genart-dev/plugin-atmosphere@0.3.0':
+    resolution: {integrity: sha512-9ecbPMYBsI2gTvbE2Pi6UuEFdiw1ZD0oKwRXHMcCJJbWr2B+LtesdX8l3gDQaHutSc7bTnbba/JBwgefRvQVAg==}
 
-  '@genart-dev/plugin-construction@0.1.0':
-    resolution: {integrity: sha512-IRYIkxTiHTzytoSfxNNmB1MAXG92m5RO3o0nX5zoNprBoe02b/xzNr632qW1DrBYNPQYWG3JaCi/79OMrFl1Bg==}
+  '@genart-dev/plugin-color-adjust@0.3.0':
+    resolution: {integrity: sha512-06RV0O/Quv0MvsNUSE34f75/sy3ro1TbXgGhlPEJEhFtRiqjXjyfUPqXZC56MvwL9g4DUDC6J5nh27F05jfH/Q==}
 
-  '@genart-dev/plugin-distribution@0.1.0':
-    resolution: {integrity: sha512-DO6q4zHzoR3yHwCupOrxfQFfcA173wXZLMvsF94+BwncJF7Zwhn6w9nYY1GWA6pQ1c7TYZgTln3Ju//redlRZA==}
+  '@genart-dev/plugin-compositing@0.3.0':
+    resolution: {integrity: sha512-kHUPRlIGkzI57EWFDyhGO/95whmShtyzrxUPwklhFL3aWPpHhpp4kp+YwtfrsMgr3vF+i87wu0U7Tu0SSQnWng==}
 
-  '@genart-dev/plugin-figure@0.1.0':
-    resolution: {integrity: sha512-7KVEttnOEHJp9MlhLi8lPpWR6oz9zGbKYAXoiZdOcmg07OkYOAYS7auVWA+P5I9slctkIQXsLgOPS1bmc6fxcA==}
+  '@genart-dev/plugin-construction@0.2.0':
+    resolution: {integrity: sha512-W9r+l1OkSe4jde/knTl/nWtRxwML0w/prCnj2SusXis4vzI1EHSXRTzRm1xjVOfCkHLPEJY+qhwG/L2lpuw3/A==}
 
-  '@genart-dev/plugin-filters@0.1.1':
-    resolution: {integrity: sha512-liR/9vrJylGQdJrNw4Tgc53GDnRDXWiUQI1xeBEEQowCIMO586OIKyeBAasfDiDAQTzD+uDap1zbqB/vPGuMBw==}
+  '@genart-dev/plugin-distribution@0.2.0':
+    resolution: {integrity: sha512-HqqsPjiknTSh8mKbv839+SKEp8I3xIgmdsqfewoQLiPDHgTLp0xe998POpK/Mh5TQtK0CGQR1I4gyVw0leXR5g==}
+
+  '@genart-dev/plugin-figure@0.2.0':
+    resolution: {integrity: sha512-1E/iL0iaB9QjZH6QoFHZDI3cg7ACnzpT1deL0rokLdw7RGgCd6f25VWwajblYJW3KbKb9+kyv1vqaVlALSPFDQ==}
+
+  '@genart-dev/plugin-filters@0.3.0':
+    resolution: {integrity: sha512-LepQGS6Zi4qVuMdw2vXeKxI4hmEYELV7VaCo+bac0vvVK3zcmd4Aip4HJdnhNxPzTNPS9Wgt3YSKS6PXk8UY3w==}
 
   '@genart-dev/plugin-identity@0.1.0':
     resolution: {integrity: sha512-vHyd3JXQ/ACaCZxGwVas/hkz8vtsY8ga7KhctNbrVUAB3eDucBWqpf5of5qgra9lwCSeLI6s1ZkKJrBBcOmF5w==}
@@ -286,50 +325,59 @@ packages:
       '@genart-dev/plugin-typography':
         optional: true
 
-  '@genart-dev/plugin-layout-composition@0.1.0':
-    resolution: {integrity: sha512-/Q0nBpRHtPjZRlAse26i1195xLco+72r/LYnwHwlgxMbvq569tiYtLis1dWo0slmAwClGJTi95daCg3cmRwiYw==}
+  '@genart-dev/plugin-layout-composition@0.2.0':
+    resolution: {integrity: sha512-hAmfXjGRayArr1fk0FmikRGNu+BRkI3nnfrAGNfX93YYoZcDwFwIn3FDSmTGO1rtAOrQAcZJTEwTiLJFlLWHVw==}
 
-  '@genart-dev/plugin-layout-guides@0.1.1':
-    resolution: {integrity: sha512-Ck7tq9gkxf6FrlkuIp95Gt52JK9qTCXoWGpDVE4Bt7W87j0WDoGMJdCGRNSM/zlaGYZkrrwAcNI3DI/VLn//hQ==}
+  '@genart-dev/plugin-layout-guides@0.2.0':
+    resolution: {integrity: sha512-Z8gNekrpcBXhM1VEi7GACwqNJEnrBENXTPVw+5AkxGhtuhKq5XDG9+h1DZNvAUjCRvOzkSXscXMwVRwoyhU21A==}
 
-  '@genart-dev/plugin-painting@0.3.0':
-    resolution: {integrity: sha512-qQFWCwoC49Hf/9HWOwU8bqgLeQfcGjoWRF3QId751wc1g6rhNfAIPY/hT+6zP/93g7K7JGR95igEmqyB5Vb3bw==}
+  '@genart-dev/plugin-painting@0.3.1':
+    resolution: {integrity: sha512-wNTSlgA8ZVTprP2p1dTf8xh4DxoqBx5KPJDHHJD0j/AyeIfiOZ9KXfEz/YjpbaoBWqdLQCxrXSKOQKfg6ny/ug==}
 
-  '@genart-dev/plugin-particles@0.1.0':
-    resolution: {integrity: sha512-8V6yAgjxWVtOjBCSl1KzpyJSiWNTDVsXbbNy2GDYspKRimrhd2WRiS+/MoXzN9AmCINTsc+QdHzw/UI3GDhDxg==}
+  '@genart-dev/plugin-painting@0.6.0':
+    resolution: {integrity: sha512-1fzQMidVh6CDWFWznW6WluUMyr0stupS0l1whJGu00oQD4ECiqvun3HrXCP5o5JIQ8F7v1NFCU1r25kmUT9oKA==}
 
-  '@genart-dev/plugin-patterns@0.2.2':
-    resolution: {integrity: sha512-SD6nDYZlVA0QikSP92YO92bXZIvXHB2zcLHGjaV9yz/4CHccMP74YYO+WXeXQcimRl1Gald5eGu0+mzfP7N46A==}
+  '@genart-dev/plugin-particles@0.4.0':
+    resolution: {integrity: sha512-tIb9IRie2ETsODDlQvPbx/8/4TdJeKJNdJ70CJ2iNTbL73xonE6k+qWkJlD4aQ7UuGSagbHmBfpa+mJpS8ESQA==}
 
-  '@genart-dev/plugin-perspective@0.2.0':
-    resolution: {integrity: sha512-sw57z3HFUWvGThuuJFwSGbccz9JGiywZ/hMfI580cEKHiRaWSMBw7hwfBoYYvD0oXpS3w7fbFOtT/TbevFjDrg==}
+  '@genart-dev/plugin-patterns@0.3.0':
+    resolution: {integrity: sha512-vNEap/3MgHTkBWkF+i6xE961ib5gyGTW7d8GQxcHjQMbo2K8LE9wA2TT16FTXRIaTW4KgZmAo4RCrZ76CdzpxA==}
 
-  '@genart-dev/plugin-plants@0.3.1':
-    resolution: {integrity: sha512-ZnHfOkifVAgMwMi7TONuR6MbBGfhKhnu1I65LnclOpx0camOEnqj1H5PJvoFSreauQIK0SzyqHQ13JVo1HUMUg==}
+  '@genart-dev/plugin-perspective@0.3.0':
+    resolution: {integrity: sha512-Z1sLf8F/DrrVYofUOeOadw/eAh+PrBFpeqmvgGJEjpqRDojn2+DCieEPXmjPlL53vR2+TUC2wB7/ds1XI7BMmA==}
 
-  '@genart-dev/plugin-poses@0.1.0':
-    resolution: {integrity: sha512-2ak4wTt75lCEd0QXniz09vf+O8w4spGBJzBMA928Mh4M11dfw+evxv7l+NTqd7hS0WyW3J+2SeeiRq0fLfrDZA==}
+  '@genart-dev/plugin-plants@1.3.0':
+    resolution: {integrity: sha512-BfaR7nXyuxxsH9s8nDY0d0Qj4KDYRMWn/EBtYIuroISd5oH58yhP8bz/t0/NTNii3dXGoMN53A7PBleHqY5GCg==}
 
-  '@genart-dev/plugin-shapes@0.1.1':
-    resolution: {integrity: sha512-FLx2dwzkGBbKaCC/RbyCxnkF5PVnDwQ5+fGNZK2oCoVlloiJgiq8rJaECqcHfn2Q1Cr9J1XDgXp2S/4X2279NQ==}
+  '@genart-dev/plugin-poses@0.2.0':
+    resolution: {integrity: sha512-pkBD307ANAlfO2BlbyVq5fZ41Wpx4JTWflXAwzE52MvUo0AEOhQBKZuvx73WWtz6iRlaXHZim3AYCROCkBAazQ==}
 
-  '@genart-dev/plugin-styles@0.1.0':
-    resolution: {integrity: sha512-Wx9TmbqPWVwVvGab7AlRSiWHB6QZ5bMkp3oeu5Va8b32hv0UOua3Cn1KY+4IwHOVnjNGgNFFEBwvXZEK9DzIug==}
+  '@genart-dev/plugin-shapes@0.3.0':
+    resolution: {integrity: sha512-xrcp1HSdUiCkquv8ITxRgYKGJOw6t+ke1V5hFKUohWSU4lQt7Y5+SamSa7cpKozQDdmsZbCtFNRefT5s7rGsKQ==}
 
-  '@genart-dev/plugin-symbols@0.1.0':
-    resolution: {integrity: sha512-xAXHliOANnlwvLZ/esc7Yg0X36784K6eliTgP0uDXGZZsflid1iXrYlO7JCX5v1R+9EziWhMw5LKKOcoDSAy+g==}
+  '@genart-dev/plugin-styles@0.2.0':
+    resolution: {integrity: sha512-6JUZlmbMj9UoMvidxMLnnKKelYPluIRftgYC6auF82vcZhqXP0whHH5B6rMkeEq4tOmB1z8hOhdyF2o1HNFRtA==}
 
-  '@genart-dev/plugin-terrain@0.4.1':
-    resolution: {integrity: sha512-eNXQ9Vh5i1sQMFZDFYSmn6fAymZIYMmyb0TUgc0Ed3KLkU02xcSLI2b2y82VxztHgLpDNqMNZ/ZvWVFZs92frQ==}
+  '@genart-dev/plugin-symbols@0.2.0':
+    resolution: {integrity: sha512-xgMU/levrHWyJY/QuUY0bZdTO9IJjPQGaTBI2vX/pKssE7G/pvy6GMawNidrOe0kW576e0OyyJpNSDZvhU8YvQ==}
 
-  '@genart-dev/plugin-textures@0.1.2':
-    resolution: {integrity: sha512-zii3cknFYLg6Ug96ZzuhEi0gm0SC6F/Lrns8WNRON9CkhUWtTNh7/5zUdn9iqXdlJ5a/wpI/8C2zLdSClEfSoQ==}
+  '@genart-dev/plugin-terrain@0.9.0':
+    resolution: {integrity: sha512-Town1yWc3ZxjiVkzQ02uIX6/T1VA5+mpEgw/nEtswzx6+J0JP3rnSN2mpv0t4pDW9LFOV9bhS9zy67meFR0PAA==}
 
-  '@genart-dev/plugin-trace@0.1.1':
-    resolution: {integrity: sha512-W90OVr3jBgVZRhTcRSGa2/SqfEdu5Z6FQ0HoyB08crEKzmmOAp3hVdqWWir+k65K7F07q9iJcHQX9kczoYwXlg==}
+  '@genart-dev/plugin-textures@0.3.0':
+    resolution: {integrity: sha512-rQc8ChzG/3N1bK/9iNLozl5UKbRlkYKIuIJlC5Xmr1xW3k5RSVyxLmXMHa6Gb/4C3ZpU+snsgKq5gQB1PahVuQ==}
 
-  '@genart-dev/plugin-typography@0.2.0':
-    resolution: {integrity: sha512-TtYD90Tmnnxm9qNUKjrWREWYMyXGsjsdiVnLJ/5yUZ4/LkBFu2qCVE5B9T0XHld3dxYFet9O4EbnJERyI6hasg==}
+  '@genart-dev/plugin-trace@0.2.0':
+    resolution: {integrity: sha512-bOJKNNuAAtbD9kE7nwZ8qDqS87sHPkf+wp5lx/6Fhd4pNxhFJ1UgduiA5WwsCS0/OLQcqwt4+hkSbCSOY963PQ==}
+
+  '@genart-dev/plugin-typography@0.3.0':
+    resolution: {integrity: sha512-BZi3GHuVsUXV3l1AkQPPnmaERSWigW3W1MSVDs0fcTgGL0eUd2t9va3kBMqDQjOMVwRkgCoDzct1jxrRjI0ORQ==}
+
+  '@genart-dev/plugin-water@0.1.2':
+    resolution: {integrity: sha512-Zx1BUaBmup/BrVl1vM+iEB/BsrEwaFwnL5xuYaucOvQkH8fQVhwks4syOC+ldqZk0uEb5de+n39xDUSAbALVCg==}
+
+  '@genart-dev/projection@0.1.0':
+    resolution: {integrity: sha512-EdFjH0nYQoJ+2WcQSsmbb6BQ1KAUh1rKAkQqsWbB7Nuc5QLGPwbF7XjqqQkWiATqUGUUE07trnl10hUOwrV1Gg==}
 
   '@genart-dev/styles@0.1.0':
     resolution: {integrity: sha512-g8fOmSs5wzMp8zrypP8kl80Mfb+cGHOe/OtYYiGlljJUcljBVmKe2M6tKODunacasyAE6ZUPoltEzvDYsNoQoQ==}
@@ -373,105 +421,89 @@ packages:
     resolution: {integrity: sha512-excjX8DfsIcJ10x1Kzr4RcWe1edC9PquDRRPx3YVCvQv+U5p7Yin2s32ftzikXojb1PIFc/9Mt28/y+iRklkrw==}
     cpu: [arm64]
     os: [linux]
-    libc: [glibc]
 
   '@img/sharp-libvips-linux-arm@1.2.4':
     resolution: {integrity: sha512-bFI7xcKFELdiNCVov8e44Ia4u2byA+l3XtsAj+Q8tfCwO6BQ8iDojYdvoPMqsKDkuoOo+X6HZA0s0q11ANMQ8A==}
     cpu: [arm]
     os: [linux]
-    libc: [glibc]
 
   '@img/sharp-libvips-linux-ppc64@1.2.4':
     resolution: {integrity: sha512-FMuvGijLDYG6lW+b/UvyilUWu5Ayu+3r2d1S8notiGCIyYU/76eig1UfMmkZ7vwgOrzKzlQbFSuQfgm7GYUPpA==}
     cpu: [ppc64]
     os: [linux]
-    libc: [glibc]
 
   '@img/sharp-libvips-linux-riscv64@1.2.4':
     resolution: {integrity: sha512-oVDbcR4zUC0ce82teubSm+x6ETixtKZBh/qbREIOcI3cULzDyb18Sr/Wcyx7NRQeQzOiHTNbZFF1UwPS2scyGA==}
     cpu: [riscv64]
     os: [linux]
-    libc: [glibc]
 
   '@img/sharp-libvips-linux-s390x@1.2.4':
     resolution: {integrity: sha512-qmp9VrzgPgMoGZyPvrQHqk02uyjA0/QrTO26Tqk6l4ZV0MPWIW6LTkqOIov+J1yEu7MbFQaDpwdwJKhbJvuRxQ==}
     cpu: [s390x]
     os: [linux]
-    libc: [glibc]
 
   '@img/sharp-libvips-linux-x64@1.2.4':
     resolution: {integrity: sha512-tJxiiLsmHc9Ax1bz3oaOYBURTXGIRDODBqhveVHonrHJ9/+k89qbLl0bcJns+e4t4rvaNBxaEZsFtSfAdquPrw==}
     cpu: [x64]
     os: [linux]
-    libc: [glibc]
 
   '@img/sharp-libvips-linuxmusl-arm64@1.2.4':
     resolution: {integrity: sha512-FVQHuwx1IIuNow9QAbYUzJ+En8KcVm9Lk5+uGUQJHaZmMECZmOlix9HnH7n1TRkXMS0pGxIJokIVB9SuqZGGXw==}
     cpu: [arm64]
     os: [linux]
-    libc: [musl]
 
   '@img/sharp-libvips-linuxmusl-x64@1.2.4':
     resolution: {integrity: sha512-+LpyBk7L44ZIXwz/VYfglaX/okxezESc6UxDSoyo2Ks6Jxc4Y7sGjpgU9s4PMgqgjj1gZCylTieNamqA1MF7Dg==}
     cpu: [x64]
     os: [linux]
-    libc: [musl]
 
   '@img/sharp-linux-arm64@0.34.5':
     resolution: {integrity: sha512-bKQzaJRY/bkPOXyKx5EVup7qkaojECG6NLYswgktOZjaXecSAeCWiZwwiFf3/Y+O1HrauiE3FVsGxFg8c24rZg==}
     engines: {node: ^18.17.0 || ^20.3.0 || >=21.0.0}
     cpu: [arm64]
     os: [linux]
-    libc: [glibc]
 
   '@img/sharp-linux-arm@0.34.5':
     resolution: {integrity: sha512-9dLqsvwtg1uuXBGZKsxem9595+ujv0sJ6Vi8wcTANSFpwV/GONat5eCkzQo/1O6zRIkh0m/8+5BjrRr7jDUSZw==}
     engines: {node: ^18.17.0 || ^20.3.0 || >=21.0.0}
     cpu: [arm]
     os: [linux]
-    libc: [glibc]
 
   '@img/sharp-linux-ppc64@0.34.5':
     resolution: {integrity: sha512-7zznwNaqW6YtsfrGGDA6BRkISKAAE1Jo0QdpNYXNMHu2+0dTrPflTLNkpc8l7MUP5M16ZJcUvysVWWrMefZquA==}
     engines: {node: ^18.17.0 || ^20.3.0 || >=21.0.0}
     cpu: [ppc64]
     os: [linux]
-    libc: [glibc]
 
   '@img/sharp-linux-riscv64@0.34.5':
     resolution: {integrity: sha512-51gJuLPTKa7piYPaVs8GmByo7/U7/7TZOq+cnXJIHZKavIRHAP77e3N2HEl3dgiqdD/w0yUfiJnII77PuDDFdw==}
     engines: {node: ^18.17.0 || ^20.3.0 || >=21.0.0}
     cpu: [riscv64]
     os: [linux]
-    libc: [glibc]
 
   '@img/sharp-linux-s390x@0.34.5':
     resolution: {integrity: sha512-nQtCk0PdKfho3eC5MrbQoigJ2gd1CgddUMkabUj+rBevs8tZ2cULOx46E7oyX+04WGfABgIwmMC0VqieTiR4jg==}
     engines: {node: ^18.17.0 || ^20.3.0 || >=21.0.0}
     cpu: [s390x]
     os: [linux]
-    libc: [glibc]
 
   '@img/sharp-linux-x64@0.34.5':
     resolution: {integrity: sha512-MEzd8HPKxVxVenwAa+JRPwEC7QFjoPWuS5NZnBt6B3pu7EG2Ge0id1oLHZpPJdn3OQK+BQDiw9zStiHBTJQQQQ==}
     engines: {node: ^18.17.0 || ^20.3.0 || >=21.0.0}
     cpu: [x64]
     os: [linux]
-    libc: [glibc]
 
   '@img/sharp-linuxmusl-arm64@0.34.5':
     resolution: {integrity: sha512-fprJR6GtRsMt6Kyfq44IsChVZeGN97gTD331weR1ex1c1rypDEABN6Tm2xa1wE6lYb5DdEnk03NZPqA7Id21yg==}
     engines: {node: ^18.17.0 || ^20.3.0 || >=21.0.0}
     cpu: [arm64]
     os: [linux]
-    libc: [musl]
 
   '@img/sharp-linuxmusl-x64@0.34.5':
     resolution: {integrity: sha512-Jg8wNT1MUzIvhBFxViqrEhWDGzqymo3sV7z7ZsaWbZNDLXRJZoRGrjulp60YYtV4wfY8VIKcWidjojlLcWrd8Q==}
     engines: {node: ^18.17.0 || ^20.3.0 || >=21.0.0}
     cpu: [x64]
     os: [linux]
-    libc: [musl]
 
   '@img/sharp-wasm32@0.34.5':
     resolution: {integrity: sha512-OdWTEiVkY2PHwqkbBI8frFxQQFekHaSSkUIJkwzclWZe64O1X4UlUjqqqLaPbUpMOQk6FBu/HtlGXNblIs0huw==}
@@ -647,6 +679,20 @@ packages:
   '@jridgewell/trace-mapping@0.3.31':
     resolution: {integrity: sha512-zzNR+SdQSDJzc8joaeP8QQoCQr8NuYx2dIIytl1QeBEZHJ9uW6hebsrYgbz8hJwUQao3TWCMtmfV8Nu1twOLAw==}
 
+  '@modelcontextprotocol/ext-apps@1.2.2':
+    resolution: {integrity: sha512-qMnhIKb8tyPesl+kZU76Xz9Bi9putCO+LcgvBJ00fDdIniiLZsnQbAeTKoq+sTiYH1rba2Fvj8NPAFxij+gyxw==}
+    engines: {node: '>=20'}
+    peerDependencies:
+      '@modelcontextprotocol/sdk': ^1.24.0
+      react: ^17.0.0 || ^18.0.0 || ^19.0.0
+      react-dom: ^17.0.0 || ^18.0.0 || ^19.0.0
+      zod: ^3.25.0 || ^4.0.0
+    peerDependenciesMeta:
+      react:
+        optional: true
+      react-dom:
+        optional: true
+
   '@modelcontextprotocol/sdk@1.27.1':
     resolution: {integrity: sha512-sr6GbP+4edBwFndLbM60gf07z0FQ79gaExpnsjMGePXqFcSSb7t6iscpjk9DhFhwd+mTEQrzNafGP8/iGGFYaA==}
     engines: {node: '>=18'}
@@ -700,79 +746,66 @@ packages:
     resolution: {integrity: sha512-t4ONHboXi/3E0rT6OZl1pKbl2Vgxf9vJfWgmUoCEVQVxhW6Cw/c8I6hbbu7DAvgp82RKiH7TpLwxnJeKv2pbsw==}
     cpu: [arm]
     os: [linux]
-    libc: [glibc]
 
   '@rollup/rollup-linux-arm-musleabihf@4.59.0':
     resolution: {integrity: sha512-CikFT7aYPA2ufMD086cVORBYGHffBo4K8MQ4uPS/ZnY54GKj36i196u8U+aDVT2LX4eSMbyHtyOh7D7Zvk2VvA==}
     cpu: [arm]
     os: [linux]
-    libc: [musl]
 
   '@rollup/rollup-linux-arm64-gnu@4.59.0':
     resolution: {integrity: sha512-jYgUGk5aLd1nUb1CtQ8E+t5JhLc9x5WdBKew9ZgAXg7DBk0ZHErLHdXM24rfX+bKrFe+Xp5YuJo54I5HFjGDAA==}
     cpu: [arm64]
     os: [linux]
-    libc: [glibc]
 
   '@rollup/rollup-linux-arm64-musl@4.59.0':
     resolution: {integrity: sha512-peZRVEdnFWZ5Bh2KeumKG9ty7aCXzzEsHShOZEFiCQlDEepP1dpUl/SrUNXNg13UmZl+gzVDPsiCwnV1uI0RUA==}
     cpu: [arm64]
     os: [linux]
-    libc: [musl]
 
   '@rollup/rollup-linux-loong64-gnu@4.59.0':
     resolution: {integrity: sha512-gbUSW/97f7+r4gHy3Jlup8zDG190AuodsWnNiXErp9mT90iCy9NKKU0Xwx5k8VlRAIV2uU9CsMnEFg/xXaOfXg==}
     cpu: [loong64]
     os: [linux]
-    libc: [glibc]
 
   '@rollup/rollup-linux-loong64-musl@4.59.0':
     resolution: {integrity: sha512-yTRONe79E+o0FWFijasoTjtzG9EBedFXJMl888NBEDCDV9I2wGbFFfJQQe63OijbFCUZqxpHz1GzpbtSFikJ4Q==}
     cpu: [loong64]
     os: [linux]
-    libc: [musl]
 
   '@rollup/rollup-linux-ppc64-gnu@4.59.0':
     resolution: {integrity: sha512-sw1o3tfyk12k3OEpRddF68a1unZ5VCN7zoTNtSn2KndUE+ea3m3ROOKRCZxEpmT9nsGnogpFP9x6mnLTCaoLkA==}
     cpu: [ppc64]
     os: [linux]
-    libc: [glibc]
 
   '@rollup/rollup-linux-ppc64-musl@4.59.0':
     resolution: {integrity: sha512-+2kLtQ4xT3AiIxkzFVFXfsmlZiG5FXYW7ZyIIvGA7Bdeuh9Z0aN4hVyXS/G1E9bTP/vqszNIN/pUKCk/BTHsKA==}
     cpu: [ppc64]
     os: [linux]
-    libc: [musl]
 
   '@rollup/rollup-linux-riscv64-gnu@4.59.0':
     resolution: {integrity: sha512-NDYMpsXYJJaj+I7UdwIuHHNxXZ/b/N2hR15NyH3m2qAtb/hHPA4g4SuuvrdxetTdndfj9b1WOmy73kcPRoERUg==}
     cpu: [riscv64]
     os: [linux]
-    libc: [glibc]
 
   '@rollup/rollup-linux-riscv64-musl@4.59.0':
     resolution: {integrity: sha512-nLckB8WOqHIf1bhymk+oHxvM9D3tyPndZH8i8+35p/1YiVoVswPid2yLzgX7ZJP0KQvnkhM4H6QZ5m0LzbyIAg==}
     cpu: [riscv64]
     os: [linux]
-    libc: [musl]
 
   '@rollup/rollup-linux-s390x-gnu@4.59.0':
     resolution: {integrity: sha512-oF87Ie3uAIvORFBpwnCvUzdeYUqi2wY6jRFWJAy1qus/udHFYIkplYRW+wo+GRUP4sKzYdmE1Y3+rY5Gc4ZO+w==}
     cpu: [s390x]
     os: [linux]
-    libc: [glibc]
 
   '@rollup/rollup-linux-x64-gnu@4.59.0':
     resolution: {integrity: sha512-3AHmtQq/ppNuUspKAlvA8HtLybkDflkMuLK4DPo77DfthRb71V84/c4MlWJXixZz4uruIH4uaa07IqoAkG64fg==}
     cpu: [x64]
     os: [linux]
-    libc: [glibc]
 
   '@rollup/rollup-linux-x64-musl@4.59.0':
     resolution: {integrity: sha512-2UdiwS/9cTAx7qIUZB/fWtToJwvt0Vbo0zmnYt7ED35KPg13Q0ym1g442THLC7VyI6JfYTP4PiSOWyoMdV2/xg==}
     cpu: [x64]
     os: [linux]
-    libc: [musl]
 
   '@rollup/rollup-openbsd-x64@4.59.0':
     resolution: {integrity: sha512-M3bLRAVk6GOwFlPTIxVBSYKUaqfLrn8l0psKinkCFxl4lQvOSz8ZrKDz2gxcBwHFpci0B6rttydI4IpS4IS/jQ==}
@@ -2381,57 +2414,94 @@ snapshots:
   '@esbuild/win32-x64@0.27.3':
     optional: true
 
-  '@genart-dev/components@0.1.0':
+  '@genart-dev/components@0.1.4':
     dependencies:
-      '@genart-dev/format': 0.2.0
+      '@genart-dev/format': 0.6.1
+
+  '@genart-dev/core@0.11.1(esbuild@0.27.3)':
+    dependencies:
+      '@genart-dev/components': 0.1.4
+      '@genart-dev/format': 0.7.0
+      '@genart-dev/genart-script': 0.1.5
+      '@genart-dev/illustration': 0.3.0
+      '@genart-dev/projection': 0.1.0
+    optionalDependencies:
+      esbuild: 0.27.3
+
+  '@genart-dev/core@0.12.0(esbuild@0.27.3)':
+    dependencies:
+      '@genart-dev/components': 0.1.4
+      '@genart-dev/format': 0.7.0
+      '@genart-dev/genart-script': 0.1.5
+      '@genart-dev/illustration': 0.3.0
+      '@genart-dev/projection': 0.1.0
+    optionalDependencies:
+      esbuild: 0.27.3
 
   '@genart-dev/core@0.3.1':
     dependencies:
-      '@genart-dev/components': 0.1.0
+      '@genart-dev/components': 0.1.4
       '@genart-dev/format': 0.3.0
 
   '@genart-dev/core@0.6.7(esbuild@0.27.3)':
     dependencies:
-      '@genart-dev/components': 0.1.0
+      '@genart-dev/components': 0.1.4
       '@genart-dev/format': 0.5.3
     optionalDependencies:
       esbuild: 0.27.3
 
-  '@genart-dev/format@0.2.0': {}
+  '@genart-dev/core@0.7.0(esbuild@0.27.3)':
+    dependencies:
+      '@genart-dev/components': 0.1.4
+      '@genart-dev/format': 0.6.1
+      '@genart-dev/illustration': 0.3.0
+    optionalDependencies:
+      esbuild: 0.27.3
 
   '@genart-dev/format@0.3.0': {}
 
   '@genart-dev/format@0.5.3': {}
 
+  '@genart-dev/format@0.6.1': {}
+
+  '@genart-dev/format@0.7.0': {}
+
+  '@genart-dev/genart-script@0.1.5': {}
+
   '@genart-dev/illustration@0.3.0': {}
 
-  '@genart-dev/mcp-server@0.4.33(esbuild@0.27.3)(typescript@5.9.3)':
+  '@genart-dev/mcp-server@0.5.0(esbuild@0.27.3)(typescript@5.9.3)':
     dependencies:
-      '@genart-dev/core': 0.6.7(esbuild@0.27.3)
-      '@genart-dev/plugin-animation': 0.1.0
-      '@genart-dev/plugin-color-adjust': 0.1.0
-      '@genart-dev/plugin-compositing': 0.1.0
-      '@genart-dev/plugin-construction': 0.1.0
-      '@genart-dev/plugin-distribution': 0.1.0
-      '@genart-dev/plugin-figure': 0.1.0
-      '@genart-dev/plugin-filters': 0.1.1
-      '@genart-dev/plugin-identity': 0.1.0(@genart-dev/plugin-typography@0.2.0(esbuild@0.27.3))(esbuild@0.27.3)
-      '@genart-dev/plugin-layout-composition': 0.1.0
-      '@genart-dev/plugin-layout-guides': 0.1.1
-      '@genart-dev/plugin-painting': 0.3.0
-      '@genart-dev/plugin-particles': 0.1.0(esbuild@0.27.3)
-      '@genart-dev/plugin-patterns': 0.2.2
-      '@genart-dev/plugin-perspective': 0.2.0
-      '@genart-dev/plugin-plants': 0.3.1(esbuild@0.27.3)
-      '@genart-dev/plugin-poses': 0.1.0
-      '@genart-dev/plugin-shapes': 0.1.1
-      '@genart-dev/plugin-styles': 0.1.0
-      '@genart-dev/plugin-symbols': 0.1.0
-      '@genart-dev/plugin-terrain': 0.4.1(esbuild@0.27.3)
-      '@genart-dev/plugin-textures': 0.1.2
-      '@genart-dev/plugin-trace': 0.1.1(esbuild@0.27.3)
-      '@genart-dev/plugin-typography': 0.2.0(esbuild@0.27.3)
+      '@genart-dev/components': 0.1.4
+      '@genart-dev/core': 0.12.0(esbuild@0.27.3)
+      '@genart-dev/plugin-animation': 0.2.0
+      '@genart-dev/plugin-architecture': 0.2.0(esbuild@0.27.3)
+      '@genart-dev/plugin-atmosphere': 0.3.0(esbuild@0.27.3)
+      '@genart-dev/plugin-color-adjust': 0.3.0
+      '@genart-dev/plugin-compositing': 0.3.0(esbuild@0.27.3)
+      '@genart-dev/plugin-construction': 0.2.0
+      '@genart-dev/plugin-distribution': 0.2.0
+      '@genart-dev/plugin-figure': 0.2.0
+      '@genart-dev/plugin-filters': 0.3.0
+      '@genart-dev/plugin-identity': 0.1.0(@genart-dev/plugin-typography@0.3.0(esbuild@0.27.3))(esbuild@0.27.3)
+      '@genart-dev/plugin-layout-composition': 0.2.0
+      '@genart-dev/plugin-layout-guides': 0.2.0
+      '@genart-dev/plugin-painting': 0.6.0
+      '@genart-dev/plugin-particles': 0.4.0(esbuild@0.27.3)
+      '@genart-dev/plugin-patterns': 0.3.0
+      '@genart-dev/plugin-perspective': 0.3.0
+      '@genart-dev/plugin-plants': 1.3.0(esbuild@0.27.3)
+      '@genart-dev/plugin-poses': 0.2.0
+      '@genart-dev/plugin-shapes': 0.3.0
+      '@genart-dev/plugin-styles': 0.2.0
+      '@genart-dev/plugin-symbols': 0.2.0(esbuild@0.27.3)
+      '@genart-dev/plugin-terrain': 0.9.0(esbuild@0.27.3)
+      '@genart-dev/plugin-textures': 0.3.0
+      '@genart-dev/plugin-trace': 0.2.0(esbuild@0.27.3)
+      '@genart-dev/plugin-typography': 0.3.0(esbuild@0.27.3)
+      '@genart-dev/plugin-water': 0.1.2(esbuild@0.27.3)
       '@genart-dev/symbols': 0.1.0
+      '@modelcontextprotocol/ext-apps': 1.2.2(@modelcontextprotocol/sdk@1.27.1(zod@3.25.76))(zod@3.25.76)
       '@modelcontextprotocol/sdk': 1.27.1(zod@3.25.76)
       archiver: 7.0.1
       puppeteer: 24.39.1(typescript@5.9.3)
@@ -2442,121 +2512,157 @@ snapshots:
       - bare-buffer
       - bufferutil
       - esbuild
+      - react
+      - react-dom
       - react-native-b4a
       - supports-color
       - typescript
       - utf-8-validate
 
-  '@genart-dev/plugin-animation@0.1.0':
+  '@genart-dev/plugin-animation@0.2.0':
     dependencies:
       '@genart-dev/core': 0.3.1
 
-  '@genart-dev/plugin-color-adjust@0.1.0':
+  '@genart-dev/plugin-architecture@0.2.0(esbuild@0.27.3)':
     dependencies:
-      '@genart-dev/core': 0.3.1
-
-  '@genart-dev/plugin-compositing@0.1.0':
-    dependencies:
-      '@genart-dev/core': 0.3.1
-
-  '@genart-dev/plugin-construction@0.1.0':
-    dependencies:
-      '@genart-dev/core': 0.3.1
-
-  '@genart-dev/plugin-distribution@0.1.0':
-    dependencies:
-      '@genart-dev/core': 0.3.1
-
-  '@genart-dev/plugin-figure@0.1.0':
-    dependencies:
-      '@genart-dev/core': 0.3.1
-
-  '@genart-dev/plugin-filters@0.1.1':
-    dependencies:
-      '@genart-dev/core': 0.3.1
-
-  '@genart-dev/plugin-identity@0.1.0(@genart-dev/plugin-typography@0.2.0(esbuild@0.27.3))(esbuild@0.27.3)':
-    dependencies:
-      '@genart-dev/core': 0.6.7(esbuild@0.27.3)
-    optionalDependencies:
-      '@genart-dev/plugin-typography': 0.2.0(esbuild@0.27.3)
+      '@genart-dev/core': 0.11.1(esbuild@0.27.3)
+      '@genart-dev/illustration': 0.3.0
+      '@genart-dev/plugin-perspective': 0.3.0
+      '@genart-dev/projection': 0.1.0
     transitivePeerDependencies:
       - esbuild
 
-  '@genart-dev/plugin-layout-composition@0.1.0':
+  '@genart-dev/plugin-atmosphere@0.3.0(esbuild@0.27.3)':
+    dependencies:
+      '@genart-dev/core': 0.7.0(esbuild@0.27.3)
+    transitivePeerDependencies:
+      - esbuild
+
+  '@genart-dev/plugin-color-adjust@0.3.0':
     dependencies:
       '@genart-dev/core': 0.3.1
 
-  '@genart-dev/plugin-layout-guides@0.1.1':
+  '@genart-dev/plugin-compositing@0.3.0(esbuild@0.27.3)':
+    dependencies:
+      '@genart-dev/core': 0.11.1(esbuild@0.27.3)
+    transitivePeerDependencies:
+      - esbuild
+
+  '@genart-dev/plugin-construction@0.2.0':
     dependencies:
       '@genart-dev/core': 0.3.1
 
-  '@genart-dev/plugin-painting@0.3.0':
+  '@genart-dev/plugin-distribution@0.2.0':
+    dependencies:
+      '@genart-dev/core': 0.3.1
+
+  '@genart-dev/plugin-figure@0.2.0':
+    dependencies:
+      '@genart-dev/core': 0.3.1
+
+  '@genart-dev/plugin-filters@0.3.0':
+    dependencies:
+      '@genart-dev/core': 0.3.1
+
+  '@genart-dev/plugin-identity@0.1.0(@genart-dev/plugin-typography@0.3.0(esbuild@0.27.3))(esbuild@0.27.3)':
+    dependencies:
+      '@genart-dev/core': 0.6.7(esbuild@0.27.3)
+    optionalDependencies:
+      '@genart-dev/plugin-typography': 0.3.0(esbuild@0.27.3)
+    transitivePeerDependencies:
+      - esbuild
+
+  '@genart-dev/plugin-layout-composition@0.2.0':
+    dependencies:
+      '@genart-dev/core': 0.3.1
+
+  '@genart-dev/plugin-layout-guides@0.2.0':
+    dependencies:
+      '@genart-dev/core': 0.3.1
+
+  '@genart-dev/plugin-painting@0.3.1':
     dependencies:
       '@genart-dev/core': 0.3.1
       canvas: 3.2.1
 
-  '@genart-dev/plugin-particles@0.1.0(esbuild@0.27.3)':
+  '@genart-dev/plugin-painting@0.6.0':
+    dependencies:
+      '@genart-dev/core': 0.3.1
+      canvas: 3.2.1
+
+  '@genart-dev/plugin-particles@0.4.0(esbuild@0.27.3)':
     dependencies:
       '@genart-dev/core': 0.6.7(esbuild@0.27.3)
+      '@genart-dev/illustration': 0.3.0
     transitivePeerDependencies:
       - esbuild
 
-  '@genart-dev/plugin-patterns@0.2.2':
+  '@genart-dev/plugin-patterns@0.3.0':
     dependencies:
       '@genart-dev/core': 0.3.1
 
-  '@genart-dev/plugin-perspective@0.2.0':
+  '@genart-dev/plugin-perspective@0.3.0':
     dependencies:
       '@genart-dev/core': 0.3.1
+      '@genart-dev/projection': 0.1.0
 
-  '@genart-dev/plugin-plants@0.3.1(esbuild@0.27.3)':
+  '@genart-dev/plugin-plants@1.3.0(esbuild@0.27.3)':
     dependencies:
       '@genart-dev/core': 0.6.7(esbuild@0.27.3)
+      '@genart-dev/plugin-painting': 0.3.1
     transitivePeerDependencies:
       - esbuild
 
-  '@genart-dev/plugin-poses@0.1.0':
+  '@genart-dev/plugin-poses@0.2.0':
     dependencies:
       '@genart-dev/core': 0.3.1
 
-  '@genart-dev/plugin-shapes@0.1.1':
+  '@genart-dev/plugin-shapes@0.3.0':
     dependencies:
       '@genart-dev/core': 0.3.1
 
-  '@genart-dev/plugin-styles@0.1.0':
+  '@genart-dev/plugin-styles@0.2.0':
     dependencies:
       '@genart-dev/core': 0.3.1
       '@genart-dev/styles': 0.1.0
 
-  '@genart-dev/plugin-symbols@0.1.0':
+  '@genart-dev/plugin-symbols@0.2.0(esbuild@0.27.3)':
     dependencies:
-      '@genart-dev/core': 0.3.1
+      '@genart-dev/core': 0.11.1(esbuild@0.27.3)
       '@genart-dev/symbols': 0.1.0
+    transitivePeerDependencies:
+      - esbuild
 
-  '@genart-dev/plugin-terrain@0.4.1(esbuild@0.27.3)':
+  '@genart-dev/plugin-terrain@0.9.0(esbuild@0.27.3)':
     dependencies:
       '@genart-dev/core': 0.6.7(esbuild@0.27.3)
     transitivePeerDependencies:
       - esbuild
 
-  '@genart-dev/plugin-textures@0.1.2':
+  '@genart-dev/plugin-textures@0.3.0':
     dependencies:
       '@genart-dev/core': 0.3.1
-      canvas: 3.2.1
 
-  '@genart-dev/plugin-trace@0.1.1(esbuild@0.27.3)':
+  '@genart-dev/plugin-trace@0.2.0(esbuild@0.27.3)':
     dependencies:
       '@genart-dev/core': 0.6.7(esbuild@0.27.3)
     transitivePeerDependencies:
       - esbuild
 
-  '@genart-dev/plugin-typography@0.2.0(esbuild@0.27.3)':
+  '@genart-dev/plugin-typography@0.3.0(esbuild@0.27.3)':
     dependencies:
       '@genart-dev/core': 0.6.7(esbuild@0.27.3)
       opentype.js: 1.3.4
     transitivePeerDependencies:
       - esbuild
+
+  '@genart-dev/plugin-water@0.1.2(esbuild@0.27.3)':
+    dependencies:
+      '@genart-dev/core': 0.7.0(esbuild@0.27.3)
+    transitivePeerDependencies:
+      - esbuild
+
+  '@genart-dev/projection@0.1.0': {}
 
   '@genart-dev/styles@0.1.0':
     dependencies:
@@ -2811,6 +2917,11 @@ snapshots:
     dependencies:
       '@jridgewell/resolve-uri': 3.1.2
       '@jridgewell/sourcemap-codec': 1.5.5
+
+  '@modelcontextprotocol/ext-apps@1.2.2(@modelcontextprotocol/sdk@1.27.1(zod@3.25.76))(zod@3.25.76)':
+    dependencies:
+      '@modelcontextprotocol/sdk': 1.27.1(zod@3.25.76)
+      zod: 3.25.76
 
   '@modelcontextprotocol/sdk@1.27.1(zod@3.25.76)':
     dependencies:
