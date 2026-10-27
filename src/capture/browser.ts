@@ -29,6 +29,28 @@ const CHROME_PATHS: Record<string, string[]> = {
   ],
 };
 
+/**
+ * Protocol timeout from `GENART_PROTOCOL_TIMEOUT_MS`, or undefined to keep
+ * puppeteer's default of 180s.
+ *
+ * A sketch that draws in one long synchronous pass holds the page's main
+ * thread, and every DevTools call made meanwhile waits on it. A heavy
+ * painting stack at `--scale 2`, rendered with the GPU disabled, can take
+ * longer than 180s, and the render then fails with `Runtime.callFunctionOn
+ * timed out` although nothing is wrong with it.
+ */
+export function protocolTimeoutMs(): number | undefined {
+  const raw = process.env["GENART_PROTOCOL_TIMEOUT_MS"];
+  if (raw === undefined || raw === "") return undefined;
+  const ms = Number(raw);
+  if (!Number.isInteger(ms) || ms <= 0) {
+    throw new Error(
+      `GENART_PROTOCOL_TIMEOUT_MS must be a positive whole number of milliseconds, got "${raw}"`,
+    );
+  }
+  return ms;
+}
+
 /** Detect system Chrome/Chromium install path. */
 export function findChromePath(): string | undefined {
   // 1. Env var override
@@ -79,9 +101,11 @@ async function getBrowser(): Promise<Browser> {
     );
   }
 
+  const protocolTimeout = protocolTimeoutMs();
   browserInstance = await puppeteer.launch({
     headless: "new",
     executablePath,
+    ...(protocolTimeout !== undefined ? { protocolTimeout } : {}),
     args: [
       "--no-sandbox",
       "--disable-setuid-sandbox",
@@ -223,6 +247,15 @@ export async function captureHtml(options: CaptureOptions): Promise<CaptureResul
     const mimeType = `image/${format}`;
 
     return { bytes, mimeType, width, height };
+  } catch (err) {
+    // Puppeteer's own message names a launch option the user cannot reach
+    if (err instanceof Error && /timed out\. Increase the 'protocolTimeout'/.test(err.message)) {
+      throw new Error(
+        `${err.message.replace(/\s*Increase the 'protocolTimeout'[\s\S]*$/, "")} The page was still busy drawing. ` +
+          "Set GENART_PROTOCOL_TIMEOUT_MS to allow a long render more time (default 180000).",
+      );
+    }
+    throw err;
   } finally {
     browser.off("disconnected", onDisconnect);
     // Closing a dead tab throws, and that error would replace the real one.

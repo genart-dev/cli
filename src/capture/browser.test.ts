@@ -1,5 +1,11 @@
 import { describe, it, expect, afterAll } from "vitest";
-import { captureHtml, closeBrowser, findChromePath, withContextLossProbe } from "./browser.js";
+import {
+  captureHtml,
+  closeBrowser,
+  findChromePath,
+  protocolTimeoutMs,
+  withContextLossProbe,
+} from "./browser.js";
 
 describe("withContextLossProbe", () => {
   it("inserts the probe just inside <head>", () => {
@@ -13,6 +19,35 @@ describe("withContextLossProbe", () => {
     const out = withContextLossProbe("<canvas></canvas>");
     expect(out.startsWith("<script>")).toBe(true);
     expect(out.endsWith("<canvas></canvas>")).toBe(true);
+  });
+});
+
+describe("protocolTimeoutMs", () => {
+  const withEnv = (value: string | undefined, fn: () => void) => {
+    const original = process.env["GENART_PROTOCOL_TIMEOUT_MS"];
+    try {
+      if (value === undefined) delete process.env["GENART_PROTOCOL_TIMEOUT_MS"];
+      else process.env["GENART_PROTOCOL_TIMEOUT_MS"] = value;
+      fn();
+    } finally {
+      if (original !== undefined) process.env["GENART_PROTOCOL_TIMEOUT_MS"] = original;
+      else delete process.env["GENART_PROTOCOL_TIMEOUT_MS"];
+    }
+  };
+
+  it("keeps puppeteer's default when unset or empty", () => {
+    withEnv(undefined, () => expect(protocolTimeoutMs()).toBeUndefined());
+    withEnv("", () => expect(protocolTimeoutMs()).toBeUndefined());
+  });
+
+  it("reads milliseconds from GENART_PROTOCOL_TIMEOUT_MS", () => {
+    withEnv("600000", () => expect(protocolTimeoutMs()).toBe(600_000));
+  });
+
+  it("rejects a value that is not a positive whole number", () => {
+    for (const bad of ["0", "-5", "1.5", "10m", "abc"]) {
+      withEnv(bad, () => expect(() => protocolTimeoutMs()).toThrow(/positive whole number/));
+    }
   });
 });
 
@@ -47,6 +82,28 @@ describe.skipIf(!findChromePath())("captureHtml", () => {
       }),
     ).rejects.toThrow(/context lost during render \(contextlost on #canvas\)/);
   });
+
+  it("applies GENART_PROTOCOL_TIMEOUT_MS and names it when a busy page times out", async () => {
+    const original = process.env["GENART_PROTOCOL_TIMEOUT_MS"];
+    await closeBrowser();
+    process.env["GENART_PROTOCOL_TIMEOUT_MS"] = "1000";
+    try {
+      await expect(
+        captureHtml({
+          html: page(
+            "setTimeout(function () { var t = Date.now(); while (Date.now() - t < 3000) {} }, 10);",
+          ),
+          width: 16,
+          height: 16,
+          waitMs: 50,
+        }),
+      ).rejects.toThrow(/timed out\. The page was still busy drawing\. Set GENART_PROTOCOL_TIMEOUT_MS/);
+    } finally {
+      if (original !== undefined) process.env["GENART_PROTOCOL_TIMEOUT_MS"] = original;
+      else delete process.env["GENART_PROTOCOL_TIMEOUT_MS"];
+      await closeBrowser();
+    }
+  }, 20_000);
 });
 
 describe("findChromePath", () => {

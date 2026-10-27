@@ -360,6 +360,7 @@ genart video noise-field.genart --duration 10 --animate scale=0.01:0.1 --easing 
 | Variable | Description |
 |----------|-------------|
 | `GENART_CHROME_PATH` | Override Chrome/Chromium path for headless rendering. Auto-detected by default. |
+| `GENART_PROTOCOL_TIMEOUT_MS` | How long a headless render may keep the page busy before failing, in milliseconds. Default `180000`. Raise it for heavy stacks at `--scale 2`, especially with the GPU disabled. |
 
 ## Optional Dependencies
 
